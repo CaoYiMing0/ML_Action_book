@@ -64,5 +64,3 @@ def file2matrix(filename):
         index += 1
     return returnMat, classLabelVector
 
-
-datingDataMat, datingLabels = file2matrix('datingTestSet.txt')
