@@ -42,5 +42,27 @@ def classify0(inX, dataSet, labels, k):
 
 # 将文本记录转化为NumPy的解析程序
 def file2matrix(filename):
+    love_dictionary = {'largeDoses': 3, 'smallDoses': 2, 'didntLike': 1}
     fr = open(filename)
-    arrayOLine = fr.readlines()
+    arrayOLines = fr.readlines()
+    # 得到文件行数
+    numberOfLines = len(arrayOLines)
+    # 创建返回的NumPy矩阵
+    returnMat = zeros((numberOfLines, 3))
+    classLabelVector = []
+    index = 0
+    # 解析文件数据到列表
+    for line in arrayOLines:
+        line = line.strip()
+        listFromLine = line.split('\t')
+        returnMat[index, :] = listFromLine[0:3]
+        # print(listFromLine[3])
+        if (listFromLine[-1].isdigit()):
+            classLabelVector.append(int(listFromLine[-1]))
+        else:
+            classLabelVector.append(love_dictionary.get(listFromLine[-1]))
+        index += 1
+    return returnMat, classLabelVector
+
+
+datingDataMat, datingLabels = file2matrix('datingTestSet.txt')
